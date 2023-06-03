@@ -11,7 +11,7 @@ function NavModal() {
     const handleItemClick = (index: number) => {
         setActiveIndex(index);
       };
-    const {toggleTheme,isToggled} = useContext(AppContext)
+    const {toggleTheme,isToggled,toggleAddNewBBOard} = useContext(AppContext)
   return (
     <DropDownContainer >
         <DropDownModal isToggled={isToggled}>
@@ -29,7 +29,7 @@ function NavModal() {
   ))}
   <AddNewTask>
   <AddBoardIcon src={IconBoard} alt="" />
-  <AddBoardText>+ Create New Board</AddBoardText>
+  <AddBoardText onClick={toggleAddNewBBOard}>+ Create New Board</AddBoardText>
   </AddNewTask>
                 <TogglerTheme isToggled={isToggled}>
                 <img src={ligthTheme} alt="" />
