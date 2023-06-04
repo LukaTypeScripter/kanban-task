@@ -21,13 +21,13 @@ function NavModal() {
 
     //close when you click outside the container
     useEffect(() => {
-      const handleOutsideClick = (e:any) => {
-        if(modalRef.current && !modalRef.current.contains(e.target)) {
+      const handleOutsideClick = (e:MouseEvent) => {
+        if(modalRef.current && !modalRef.current.contains(e.target as Node)) {
           setIsOpen(false)
         }
 
       }
-      const handleEscClick = (e:any) => {
+      const handleEscClick = (e:KeyboardEvent) => {
         if(e.key === 'Escape') {
           setIsOpen(false)
         }

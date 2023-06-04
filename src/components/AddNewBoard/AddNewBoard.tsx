@@ -9,8 +9,8 @@ function AddNewBoard() {
     const modalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-      const handleOutsideClick = (event:any) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
+      const handleOutsideClick = (event:MouseEvent) => {
+        if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
             setIsOpenAddModal(false);
         }
       };

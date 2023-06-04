@@ -8,7 +8,7 @@ export default function Elapsis() {
 
     useEffect(() => {
        
-     const handleEsc = (e:any) => {
+     const handleEsc = (e:KeyboardEvent) => {
         if(e.key === 'Escape') {
             setIsSmallModalOpen(false)
         }
