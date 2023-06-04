@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DefaultStyles } from "../../../RootStyles";
-const {DarkGray,LigthGray,VeryDarkGray,White} = DefaultStyles.colors
+const {DarkGray,LigthGray,VeryDarkGray,White,MediumGray} = DefaultStyles.colors
 export const DropDownContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   bottom: -100vh;
@@ -35,11 +35,10 @@ export const DropDownBoard = styled.div<{ active: boolean }>`
   font-size: 15px;
   font-weight: 700;
   margin-right: 24px;
-color: ${DefaultStyles.colors.Red};
   padding: 15px 24px;
   transition: 0.3s;
   background-color: ${(props) => (props.active ? "blue" : "none")};
-  color: ${(props) => (props.active ? "white" : "black")};
+  color: ${(props) => (props.active ? "white" : MediumGray)};
   background: ${(props) => (props.active ? "#635FC7" : "")};
   border-radius: ${(props) => (props.active ? "0px 100px 100px 0px" : "")};
 `;
