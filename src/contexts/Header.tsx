@@ -19,7 +19,10 @@ interface AppContextValue {
   handleAddSubTask: () => void;
   isNewTask: boolean;
   handleTaskModal: () => void;
-  setIsNewTask:React.Dispatch<React.SetStateAction<boolean>>
+  setIsNewTask:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsOpen:React.Dispatch<React.SetStateAction<boolean>>,
+  setIsSmallModalOpen:React.Dispatch<React.SetStateAction<boolean>>,
+  isSmallModalOpen:boolean
 }
 
 // Create the initial context value
@@ -42,6 +45,9 @@ const initialContextValue: AppContextValue = {
   isNewTask:false,
   handleTaskModal: () => {},
   setIsNewTask: () => {},
+  setIsOpen: () => {},
+  setIsSmallModalOpen: () => {},
+  isSmallModalOpen:false
 };
 
 // Create the context
@@ -59,8 +65,10 @@ export const AppContextProvider = ({
   const [columnInputs, setColumnInputs] = useState(["todo", "doing"]);
   const [subTasks, setSubTasks] = useState([""]);
   const [isNewTask, setIsNewTask] = useState(false)
+  const [isSmallModalOpen, setIsSmallModalOpen] = useState(false)
   const toggleTheme = () => {
     setIsToggled(!isToggled);
+    console.log(isToggled)
   };
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -96,6 +104,9 @@ export const AppContextProvider = ({
     setIsOpenAddModal(false);
     setIsNewTask(!isNewTask);
   }
+  //small modlal  toggle
+
+  
   const value: AppContextValue = {
     isOpen,
     toggleOpen,
@@ -114,7 +125,10 @@ export const AppContextProvider = ({
     handleAddSubTask,
     handleTaskModal,
     isNewTask,
-    setIsNewTask
+    setIsNewTask,
+    setIsOpen,
+    setIsSmallModalOpen,
+    isSmallModalOpen
   };
   // Provide the context value to the children components
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
