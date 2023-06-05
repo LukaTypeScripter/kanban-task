@@ -3,10 +3,12 @@ import { Modal, ModalCOnt,NewBoardHeader,Lables,BoardNameInp,AddBtn,ModalCols,Mo
 import AppContext from '../../contexts/Header';
 import cross from '../../assets/icon-cross.svg'
 import AddNewTask from '../AddNewTask/AddNewTask';
+import MainContext from '../../contexts/MainContext';
 
 function AddNewBoard() {
     const {setIsOpenAddModal,columnInputs,setColumnInputs,handleAddColumnInput,handleDeleteColumnInput,isToggled} = useContext(AppContext)
     const modalRef = useRef<HTMLDivElement>(null);
+   
 
     useEffect(() => {
       const handleOutsideClick = (event:MouseEvent) => {
@@ -21,16 +23,34 @@ function AddNewBoard() {
         document.removeEventListener('mousedown', handleOutsideClick);
       };
     }, []);
+    const {boardData,boardName,setBoardName} = useContext(MainContext)
+    const {setBoaredData} = useContext(MainContext)
+
+    const handleAddNewBoard = () => {
+      const updatedBoardData = [...boardData];
+      const newBoard = {
+        name: boardName,
+        columns: columnInputs.map((columnName) => ({
+          name: columnName,
+          tasks: [],
+        })),
+      };
+      updatedBoardData.push(newBoard);
+    
+      setBoaredData(updatedBoardData);
+      setIsOpenAddModal(false);
+    };
+    console.log(boardData)
   return (
     <ModalCOnt>
         <Modal ref={modalRef} isToggled={isToggled}>
             <NewBoardHeader isToggled={isToggled}>Add new Board</NewBoardHeader>
             <Lables isToggled={isToggled}>Board Name</Lables>
-            <BoardNameInp isToggled={isToggled}  type='text' />
+            <BoardNameInp isToggled={isToggled} onChange={(e) => setBoardName(e.target.value)}  type='text' />
             <Lables isToggled={isToggled}>Board Columns</Lables> 
             <ModalCols>
             {columnInputs.map((input,index) => (
-                <ModalCol>
+                <ModalCol key={index}>
                  <InputCont>   
     <BoardNameInp
     isToggled={isToggled} 
@@ -41,6 +61,7 @@ function AddNewBoard() {
         const newInputs = [...columnInputs]
         newInputs[index] = e.target.value
         setColumnInputs(newInputs)
+        console.log(newInputs)
     }}
     />
     </InputCont>
@@ -50,12 +71,9 @@ function AddNewBoard() {
 
             </ModalCols>
             <AddBtn onClick={handleAddColumnInput} isToggled={isToggled} >+ Add column</AddBtn>
-            <SecondBtn onClick={handleAddColumnInput}>Create New Board</SecondBtn>
+            <SecondBtn onClick={handleAddNewBoard}>Create New Board</SecondBtn>
             
         </Modal>
-      {/**add New task modal */}
-      
-
     </ModalCOnt>
   )
 }
