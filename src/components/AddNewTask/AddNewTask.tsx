@@ -50,7 +50,7 @@ function AddNewTask() {
         <Lables isToggled={isToggled}>SubTasks</Lables>
         <ModalCols>
           {subTasks.map((input, index) => (
-            <ModalCol>
+            <ModalCol key={index}>
               <InputCont>
                 <BoardNameInp
                   isToggled={isToggled}
