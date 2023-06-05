@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import { DefaultStyles } from "../../../RootStyles";
-const { LigthGray, MediumGray,VeryDarkGray,DarkGray } = DefaultStyles.colors;
+const { LigthGray, MediumGray,VeryDarkGray,DarkGray,MainPurple } = DefaultStyles.colors;
 export const Board = styled.div<{isToggled:boolean}>`
   display: flex;
   overflow-x: scroll;
@@ -45,4 +45,26 @@ export const NumOfSubTAsks = styled.p`
     font-size: 12px;
     font-weight: 700;
     line-height: 15px;
+`
+
+export const AddNewCol = styled.div<{isToggled:boolean}>`
+align-items: center;
+background: ${props => props.isToggled ? " linear-gradient(180deg,#e9effa,rgba(233,239,250,.5))" : "linear-gradient(180deg,rgba(43,44,55,.25),rgba(43,44,55,.125));"};
+    border-radius: 6px;
+    color:${MediumGray};
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 39px;
+    min-width: 280px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
+    text-transform: capitalize;
+
+    &:hover{
+    color: ${MainPurple};
+    transition: .3s;
+    }
 `
