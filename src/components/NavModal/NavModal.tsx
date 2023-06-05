@@ -11,10 +11,10 @@ function NavModal() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
    const modalRef = useRef<HTMLDivElement>(null)
     const {toggleTheme,isToggled,toggleAddNewBBOard,setIsOpen} = useContext(AppContext)
-    const {HandlePlatformChange} = useContext(MainContext)
+    const {HandlePlatformChange,boardData} = useContext(MainContext)
     const handleItemClick = (index: number) => {
       setActiveIndex(index);
-      const selectedBoard = NameData.boards[index].name;
+      const selectedBoard = boardData[index].name;
       HandlePlatformChange(selectedBoard);
       
     };
@@ -40,12 +40,15 @@ function NavModal() {
       document.removeEventListener('keydown', handleEscClick)
       }
     },[])
+
+  
+
   return (
     <DropDownContainer  >
         <DropDownModal isToggled={isToggled} ref={modalRef}>
             <Title>ALL BOARDS (3)</Title>
             <DropDownBoards>
-               {NameData.boards.map((board, index) => (
+               {boardData.map((board, index) => (
     <DropDownBoard
       key={index}
       active={activeIndex === index}
