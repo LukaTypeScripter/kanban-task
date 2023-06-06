@@ -8,17 +8,17 @@ import darkTheme from '../../assets/icon-dark-theme.svg'
 import AppContext, { AppContextProvider } from '../../contexts/Header'
 import MainContext from '../../contexts/MainContext'
 function NavModal() {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    
    const modalRef = useRef<HTMLDivElement>(null)
-    const {toggleTheme,isToggled,toggleAddNewBBOard,setIsOpen} = useContext(AppContext)
-    const {HandlePlatformChange,boardData} = useContext(MainContext)
+    const {toggleTheme,isToggled,toggleAddNewBBOard,setIsOpen,} = useContext(AppContext)
+    const {HandlePlatformChange,boardData,setActiveIndex,activeIndex} = useContext(MainContext)
     const handleItemClick = (index: number) => {
       setActiveIndex(index);
       const selectedBoard = boardData[index].name;
       HandlePlatformChange(selectedBoard);
       
     };
-
+    console.log(activeIndex)
     //close when you click outside the container
     useEffect(() => {
       const handleOutsideClick = (e:MouseEvent) => {
@@ -46,7 +46,7 @@ function NavModal() {
   return (
     <DropDownContainer  >
         <DropDownModal isToggled={isToggled} ref={modalRef}>
-            <Title>ALL BOARDS (3)</Title>
+            <Title>ALL BOARDS ({boardData.length})</Title>
             <DropDownBoards>
                {boardData.map((board, index) => (
     <DropDownBoard
