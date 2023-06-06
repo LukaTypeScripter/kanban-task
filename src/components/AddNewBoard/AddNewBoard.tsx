@@ -23,8 +23,8 @@ function AddNewBoard() {
         document.removeEventListener('mousedown', handleOutsideClick);
       };
     }, []);
-    const {boardData,boardName,setBoardName} = useContext(MainContext)
-    const {setBoaredData} = useContext(MainContext)
+    const {boardData,boardName,setBoardName,} = useContext(MainContext)
+    const {setBoaredData,setActiveIndex} = useContext(MainContext)
 
     const handleAddNewBoard = () => {
       const updatedBoardData = [...boardData];
@@ -35,9 +35,15 @@ function AddNewBoard() {
           tasks: [],
         })),
       };
+    
       updatedBoardData.push(newBoard);
     
       setBoaredData(updatedBoardData);
+    
+      // Set the activeIndex to the index of the newly created board
+      const newIndex = updatedBoardData.length - 1;
+      setActiveIndex(newIndex);
+    console.log(newIndex)
       setIsOpenAddModal(false);
     };
     console.log(boardData)
