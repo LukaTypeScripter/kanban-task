@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Board,
   Cols,
@@ -9,39 +9,20 @@ import {
   AddNewCol,
 } from './MainPAgeStyles/mainPage';
 import Data from '../../data.json';
-import MainContext from '../../contexts/MainContext';
+import MainContext, { BoardData } from '../../contexts/MainContext';
 import AppContext from '../../contexts/Header';
 
-interface Task {
-  title: string;
-  description: string;
-  status: string;
-  subtasks: SubTask[];
-}
 
-interface SubTask {
-  title: string;
-  isCompleted: boolean;
-}
-
-interface Column {
-  name: string;
-  tasks: Task[];
-}
-
-interface BoardData {
-  name: string;
-  columns: Column[];
-}
 
 const MainPage: React.FC = () => {
-  const { selectedPlatform, boardData } = useContext(MainContext);
-  const platformData: BoardData[] = Object.values(boardData);
+  const { board,modifiedBoard,setModifiedBoard } = useContext(MainContext);
+  
   
   const { isToggled } = useContext(AppContext);
-  const board = platformData.find((board) => board.name === selectedPlatform);
-
   if (!board) return null;
+
+ 
+
 
   return (
     <div>
@@ -49,6 +30,7 @@ const MainPage: React.FC = () => {
         {board.columns.map((column) => (
           <Cols key={column.name}>
             <ColName>{column.name}</ColName>
+            
             {column.tasks.map((task) => (
               <Task key={task.title} isToggled={isToggled} draggable>
                 <TaskTitle isToggled={isToggled}>{task.title}</TaskTitle>
@@ -60,7 +42,7 @@ const MainPage: React.FC = () => {
           </Cols>
         ))}
         
-          <AddNewCol isToggled={isToggled}>+ new column</AddNewCol>
+          <AddNewCol isToggled={isToggled} >+ new column</AddNewCol>
         
       </Board>
     </div>
