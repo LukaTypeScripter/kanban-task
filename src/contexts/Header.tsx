@@ -66,6 +66,7 @@ export const AppContextProvider = ({
   const [subTasks, setSubTasks] = useState([""]);
   const [isNewTask, setIsNewTask] = useState(false)
   const [isSmallModalOpen, setIsSmallModalOpen] = useState(false)
+  console.log(subTasks)
   const toggleTheme = () => {
     setIsToggled(!isToggled);
     console.log(isToggled)

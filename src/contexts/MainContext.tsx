@@ -1,7 +1,7 @@
 
 import React, { createContext, useState } from "react";
 import NameData from '../data.json'
-interface Task {
+export interface Task {
   title: string;
   description: string;
   status: string;
@@ -18,7 +18,7 @@ interface Column {
   tasks: Task[];
 }
 
-interface BoardData {
+export interface BoardData {
   name: string;
   columns: Column[];
 }
@@ -31,6 +31,12 @@ interface MainContextValue {
   setBoardName:React.Dispatch<React.SetStateAction<string>>
   boardData:BoardData[],
   setBoaredData:React.Dispatch<React.SetStateAction<BoardData[]>>;
+  board:BoardData | undefined,
+  modifiedBoard: BoardData[];
+  setModifiedBoard: React.Dispatch<React.SetStateAction<BoardData[]>>;
+  platformData:BoardData[]
+  setActiveIndex:React.Dispatch<React.SetStateAction<number | null>>
+  activeIndex:number | null
 }
 
 const initialContextValue: MainContextValue = {
@@ -42,6 +48,12 @@ const initialContextValue: MainContextValue = {
   setBoardName:() => {},
   boardData: [] as BoardData[],
   setBoaredData:() => {},
+  board: undefined,
+  modifiedBoard:[],
+  setModifiedBoard:() => {},
+  platformData:[] as BoardData[],
+  activeIndex:null,
+  setActiveIndex:() => {}
 };
 
 const MainContext = createContext<MainContextValue>(initialContextValue);
@@ -55,10 +67,15 @@ export const MainContextProvider = ({ children }: {
   const [name,setName] = useState<string>("");
   const [boardName,setBoardName] = useState<string>("")
   const [boardData,setBoaredData] = useState(NameData.boards)
+  const [modifiedBoard, setModifiedBoard] = useState<BoardData[]>(boardData);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const HandlePlatformChange = (platform: string) => {
     setSelectedPlatform(platform);
   };
+  const platformData: BoardData[] = Object.values(boardData);
+  const board = platformData.find((board) => board.name === selectedPlatform);
 
+  
   const value: MainContextValue = {
     selectedPlatform,
     HandlePlatformChange,
@@ -67,7 +84,13 @@ export const MainContextProvider = ({ children }: {
     boardName,
     setBoardName,
     boardData,
-    setBoaredData
+    setBoaredData,
+    board,
+    modifiedBoard,
+    setModifiedBoard,
+    platformData,
+    activeIndex,
+    setActiveIndex
   };
 
   return (
