@@ -20,32 +20,88 @@ import {
   SelectCont,
 } from "./NewTaskStyles/newTask";
 import cross from "../../assets/icon-cross.svg";
-function AddNewTask() {
-    const {
-        isToggled,
-        handleDeleteSubTasks,
-        setSubTasks,
-        subTasks,
-        handleAddSubTask,
-        setIsNewTask
+import MainContext, { Task } from "../../contexts/MainContext";
 
-      } = useContext(AppContext);
-   
+
+function AddNewTask() {
+  const {
+    isToggled,
+    handleDeleteSubTasks,
+    setSubTasks,
+    subTasks,
+    handleAddSubTask,
+    setIsNewTask,
+  } = useContext(AppContext);
+  const {activeIndex } = useContext(MainContext);
+  const { modifiedBoard, setModifiedBoard } = useContext(MainContext);
+  //taking value and then makin sure that everything is valid then creating newTask also making sure index is not null
+ 
+  const handleCreateTask = () => {
+    const taskNameInput = document.querySelector(
+      "#taskNameInput"
+    ) as HTMLInputElement | null;
+    const descriptionInput = document.querySelector(
+      "#descriptionInput"
+    ) as HTMLInputElement | null;
+    const statusInput = document.querySelector(
+      "#statusInput"
+    ) as HTMLSelectElement | null;
+    
+    if (taskNameInput && descriptionInput && statusInput) {
+      const newTask: Task = {
+        title: taskNameInput.value || "",
+        description: descriptionInput.value || "",
+        status: statusInput.value || "",
+        subtasks: subTasks.map((subTaskTitle) => ({
+          title: subTaskTitle,
+          isCompleted: false,
+        })),
+      };
+  
+      if (activeIndex !== null) {
+        const selectedBoard = modifiedBoard[activeIndex];
+       
+        if (selectedBoard) {
+          const columnIndex = selectedBoard.columns.findIndex(
+            (column) => column.name === statusInput.value
+          );
+            console.log(columnIndex)
+          if (columnIndex !== -1) {
+            selectedBoard.columns[columnIndex].tasks.push(newTask);
+          }
+        }
+      }
+  
+      setModifiedBoard([...modifiedBoard]);
+  
+      // Reset the form fields and subtasks
+      taskNameInput.value = "";
+      descriptionInput.value = "";
+      statusInput.value = "Todo";
+      setSubTasks([""]);
+  
+      setIsNewTask(false);
+    }
+  };
 
   return (
     <ModalCOnt>
-      <Modal isToggled={isToggled} >
+      <Modal isToggled={isToggled}>
         <NewBoardHeader isToggled={isToggled}>
-            Add New Task
-            <img src={cross} alt="" onClick={() => setIsNewTask(false)} />
+          Add New Task
+          <img src={cross} alt="" onClick={() => setIsNewTask(false)} />
         </NewBoardHeader>
         <Lables isToggled={isToggled}>Task Name</Lables>
         <InputCont>
-          <BoardNameInp isToggled={isToggled} type="text" />
+          <BoardNameInp
+            id="taskNameInput"
+            isToggled={isToggled}
+            type="text"
+          />
         </InputCont>
         <DescCont>
-        <Lables isToggled={isToggled}>Description</Lables>
-          <Description isToggled={isToggled} />
+          <Lables isToggled={isToggled}>Description</Lables>
+          <Description id="descriptionInput" isToggled={isToggled} />
         </DescCont>
         <Lables isToggled={isToggled}>SubTasks</Lables>
         <ModalCols>
@@ -73,13 +129,13 @@ function AddNewTask() {
         </ModalCols>
         <SelectCont>
           <Lables isToggled={isToggled}>Current Status</Lables>
-          <Options isToggled={isToggled}>
+          <Options isToggled={isToggled} id="statusInput">
             <OptSelection>Todo</OptSelection>
             <OptSelection>Doing</OptSelection>
             <OptSelection>Done</OptSelection>
           </Options>
         </SelectCont>
-        <SecondBtn>Create Task</SecondBtn>
+        <SecondBtn onClick={handleCreateTask}>Create Task</SecondBtn>
       </Modal>
     </ModalCOnt>
   );
