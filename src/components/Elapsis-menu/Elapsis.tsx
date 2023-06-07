@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ElapsisMenu,Delate } from './ElapsisStyles/elapsis'
 import AppContext from '../../contexts/Header'
+import MainContext from '../../contexts/MainContext'
 
 export default function Elapsis() {
     const {setIsSmallModalOpen,isToggled} = useContext(AppContext)
+    const {activeIndex,boardData,setBoaredData,setActiveIndex,setBoardName,HandlePlatformChange} = useContext(MainContext)
     const smallModalREf = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -21,10 +23,30 @@ export default function Elapsis() {
      }
 
     })
+
+    const handleDeleteBoard = () => {
+      if (activeIndex !== null) {
+        const updatedBoardData = [...boardData];
+        updatedBoardData.splice(activeIndex, 1);
+    
+        let newActiveIndex = activeIndex;
+        if (newActiveIndex >= updatedBoardData.length) {
+          newActiveIndex = updatedBoardData.length - 1;
+        }
+    
+        setBoaredData(updatedBoardData);
+        setActiveIndex(newActiveIndex);
+        if (updatedBoardData.length > 0) {
+          const selectedBoard = updatedBoardData[newActiveIndex].name;
+          HandlePlatformChange(selectedBoard);
+        }
+      }
+    };
+  
   return (
     <ElapsisMenu ref={smallModalREf} isToggled={isToggled}>
         <p >edit board</p>
-        <Delate>Delate board</Delate>
+        <Delate onClick={handleDeleteBoard}>Delate board</Delate>
     </ElapsisMenu>
   )
 }
