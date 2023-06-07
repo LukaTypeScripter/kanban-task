@@ -75,7 +75,6 @@ export const MainContextProvider = ({ children }: {
   const platformData: BoardData[] = Object.values(boardData);
   const board = platformData.find((board) => board.name === selectedPlatform);
 
-  
   const value: MainContextValue = {
     selectedPlatform,
     HandlePlatformChange,
