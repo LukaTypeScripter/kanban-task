@@ -42,8 +42,8 @@ function AddNewBoard() {
     
       // Set the activeIndex to the index of the newly created board
       const newIndex = updatedBoardData.length - 1;
+      console.log(newIndex);
       setActiveIndex(newIndex);
-    console.log(newIndex)
       setIsOpenAddModal(false);
     };
     console.log(boardData)

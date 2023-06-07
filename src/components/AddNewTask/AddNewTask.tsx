@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   Modal,
   NewBoardHeader,
@@ -33,57 +33,68 @@ function AddNewTask() {
     setIsNewTask,
   } = useContext(AppContext);
   const {activeIndex } = useContext(MainContext);
-  const { modifiedBoard, setModifiedBoard } = useContext(MainContext);
+  const { modifiedBoard, setModifiedBoard,boardData,setBoaredData } = useContext(MainContext);
   //taking value and then makin sure that everything is valid then creating newTask also making sure index is not null
  
+  const [taskName, setTaskName] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("Todo");
+
   const handleCreateTask = () => {
-    const taskNameInput = document.querySelector(
-      "#taskNameInput"
-    ) as HTMLInputElement | null;
-    const descriptionInput = document.querySelector(
-      "#descriptionInput"
-    ) as HTMLInputElement | null;
-    const statusInput = document.querySelector(
-      "#statusInput"
-    ) as HTMLSelectElement | null;
-    
-    if (taskNameInput && descriptionInput && statusInput) {
-      const newTask: Task = {
-        title: taskNameInput.value || "",
-        description: descriptionInput.value || "",
-        status: statusInput.value || "",
-        subtasks: subTasks.map((subTaskTitle) => ({
-          title: subTaskTitle,
-          isCompleted: false,
-        })),
-      };
-  
+    const newTask: Task = {
+      title: taskName,
+      description,
+      status,
+      subtasks: subTasks.map((subTaskTitle) => ({
+        title: subTaskTitle,
+        isCompleted: false,
+      })),
+    };
+
+    setBoaredData(prevBoardData => {
+      const updatedBoardData = [...prevBoardData];
+      console.log("updt " + updatedBoardData)
       if (activeIndex !== null) {
-        const selectedBoard = modifiedBoard[activeIndex];
-       
+        const selectedBoard = updatedBoardData[activeIndex];
+        console.log(selectedBoard )
+        console.log(selectedBoard)
         if (selectedBoard) {
           const columnIndex = selectedBoard.columns.findIndex(
-            (column) => column.name === statusInput.value
+            (column) => column.name === status
           );
-            console.log(columnIndex)
+            console.log("culumindex " + columnIndex)
           if (columnIndex !== -1) {
+            if (!selectedBoard.columns[columnIndex].tasks) {
+              selectedBoard.columns[columnIndex].tasks = []; // Initialize tasks array if it doesn't exist
+            }
             selectedBoard.columns[columnIndex].tasks.push(newTask);
           }
         }
       }
-  
-      setModifiedBoard([...modifiedBoard]);
-  
-      // Reset the form fields and subtasks
-      taskNameInput.value = "";
-      descriptionInput.value = "";
-      statusInput.value = "Todo";
-      setSubTasks([""]);
-  
-      setIsNewTask(false);
-    }
+
+      return updatedBoardData;
+    });
+
+    // Reset the form fields and subtasks
+    setTaskName("");
+    setDescription("");
+    setStatus("Todo");
+    setSubTasks([""]);
+
+    setIsNewTask(false);
   };
 
+  const renderOptions = () => {
+    if (activeIndex !== null) {
+      const selectedBoard = boardData[activeIndex];
+      if (selectedBoard) {
+        return selectedBoard.columns.map((column) => (
+          <OptSelection key={column.name}>{column.name}</OptSelection>
+        ));
+      }
+    }
+    return null;
+  };
   return (
     <ModalCOnt>
       <Modal isToggled={isToggled}>
@@ -97,11 +108,18 @@ function AddNewTask() {
             id="taskNameInput"
             isToggled={isToggled}
             type="text"
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
           />
         </InputCont>
         <DescCont>
           <Lables isToggled={isToggled}>Description</Lables>
-          <Description id="descriptionInput" isToggled={isToggled} />
+          <Description
+            id="descriptionInput"
+            isToggled={isToggled}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </DescCont>
         <Lables isToggled={isToggled}>SubTasks</Lables>
         <ModalCols>
@@ -120,7 +138,11 @@ function AddNewTask() {
                   }}
                 />
               </InputCont>
-              <img src={cross} onClick={() => handleDeleteSubTasks(index)} />
+              <img
+                src={cross}
+                onClick={() => handleDeleteSubTasks(index)}
+                alt=""
+              />
             </ModalCol>
           ))}
           <AddBtn onClick={handleAddSubTask} isToggled={isToggled}>
@@ -129,10 +151,13 @@ function AddNewTask() {
         </ModalCols>
         <SelectCont>
           <Lables isToggled={isToggled}>Current Status</Lables>
-          <Options isToggled={isToggled} id="statusInput">
-            <OptSelection>Todo</OptSelection>
-            <OptSelection>Doing</OptSelection>
-            <OptSelection>Done</OptSelection>
+          <Options
+            isToggled={isToggled}
+            id="statusInput"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+           {renderOptions()}
           </Options>
         </SelectCont>
         <SecondBtn onClick={handleCreateTask}>Create Task</SecondBtn>
