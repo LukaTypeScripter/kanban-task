@@ -21,6 +21,7 @@ import {
 } from "./NewTaskStyles/newTask";
 import cross from "../../assets/icon-cross.svg";
 import MainContext, { Task } from "../../contexts/MainContext";
+import DelateMOdal from "../DelateModal/DelateMOdal";
 
 
 function AddNewTask() {
@@ -33,7 +34,7 @@ function AddNewTask() {
     setIsNewTask,
   } = useContext(AppContext);
   const {activeIndex } = useContext(MainContext);
-  const { modifiedBoard, setModifiedBoard,boardData,setBoaredData } = useContext(MainContext);
+  const {boardData,setBoaredData } = useContext(MainContext);
   //taking value and then makin sure that everything is valid then creating newTask also making sure index is not null
  
   const [taskName, setTaskName] = useState("");
@@ -162,6 +163,7 @@ function AddNewTask() {
         </SelectCont>
         <SecondBtn onClick={handleCreateTask}>Create Task</SecondBtn>
       </Modal>
+      
     </ModalCOnt>
   );
 }
