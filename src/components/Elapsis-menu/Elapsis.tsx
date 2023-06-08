@@ -5,48 +5,29 @@ import MainContext from '../../contexts/MainContext'
 
 export default function Elapsis() {
     const {setIsSmallModalOpen,isToggled} = useContext(AppContext)
-    const {activeIndex,boardData,setBoaredData,setActiveIndex,setBoardName,HandlePlatformChange} = useContext(MainContext)
+    const {EdiModalOpen,setDelateIsOpen,delateISopen} = useContext(MainContext)
     const smallModalREf = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-       
-     const handleEsc = (e:KeyboardEvent) => {
-        if(e.key === 'Escape') {
-            setIsSmallModalOpen(false)
+      const handleOutsideClick = (event: MouseEvent) => {
+        if (smallModalREf.current && !smallModalREf.current.contains(event.target as Node)) {
+          setIsSmallModalOpen(false);
         }
-     }
-     
-     document.addEventListener('keydown', handleEsc)
-
-     return () => {
-     document.removeEventListener('keydown', handleEsc)
-     }
-
+      };
+  
+      document.addEventListener('mousedown', handleOutsideClick);
+  
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+      };
     })
 
-    const handleDeleteBoard = () => {
-      if (activeIndex !== null) {
-        const updatedBoardData = [...boardData];
-        updatedBoardData.splice(activeIndex, 1);
     
-        let newActiveIndex = activeIndex;
-        if (newActiveIndex >= updatedBoardData.length) {
-          newActiveIndex = updatedBoardData.length - 1;
-        }
-    
-        setBoaredData(updatedBoardData);
-        setActiveIndex(newActiveIndex);
-        if (updatedBoardData.length > 0) {
-          const selectedBoard = updatedBoardData[newActiveIndex].name;
-          HandlePlatformChange(selectedBoard);
-        }
-      }
-    };
   
   return (
     <ElapsisMenu ref={smallModalREf} isToggled={isToggled}>
-        <p >edit board</p>
-        <Delate onClick={handleDeleteBoard}>Delate board</Delate>
+        <p onClick={EdiModalOpen}>edit board</p>
+        <Delate onClick={() => setDelateIsOpen(!delateISopen)}>Delate board</Delate>
     </ElapsisMenu>
   )
 }
