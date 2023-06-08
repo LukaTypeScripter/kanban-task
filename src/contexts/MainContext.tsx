@@ -35,8 +35,13 @@ interface MainContextValue {
   modifiedBoard: BoardData[];
   setModifiedBoard: React.Dispatch<React.SetStateAction<BoardData[]>>;
   platformData:BoardData[]
-  setActiveIndex:React.Dispatch<React.SetStateAction<number | null>>
-  activeIndex:number | null
+  setActiveIndex:React.Dispatch<React.SetStateAction<number>>
+  activeIndex:number,
+  EdiModalOpen:() => void,
+  editModal:boolean,
+  setEditModal:React.Dispatch<React.SetStateAction<boolean>>,
+  delateISopen:boolean,
+  setDelateIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const initialContextValue: MainContextValue = {
@@ -52,8 +57,13 @@ const initialContextValue: MainContextValue = {
   modifiedBoard:[],
   setModifiedBoard:() => {},
   platformData:[] as BoardData[],
-  activeIndex:null,
-  setActiveIndex:() => {}
+  activeIndex:0,
+  setActiveIndex:() => {},
+  EdiModalOpen:() => {},
+  editModal:false,
+  setEditModal:() => {},
+  delateISopen:false,
+  setDelateIsOpen:() => {},
 };
 
 const MainContext = createContext<MainContextValue>(initialContextValue);
@@ -68,10 +78,15 @@ export const MainContextProvider = ({ children }: {
   const [boardName,setBoardName] = useState<string>("")
   const [boardData,setBoaredData] = useState(NameData.boards)
   const [modifiedBoard, setModifiedBoard] = useState<BoardData[]>(boardData);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [editModal,setEditModal] = useState(false);
+  const [delateISopen,setDelateIsOpen] = useState(false);
   const HandlePlatformChange = (platform: string) => {
     setSelectedPlatform(platform);
   };
+  const EdiModalOpen = () => {
+    setEditModal(!editModal)
+  }
   const platformData: BoardData[] = Object.values(boardData);
   const board = platformData.find((board) => board.name === selectedPlatform);
 
@@ -89,7 +104,12 @@ export const MainContextProvider = ({ children }: {
     setModifiedBoard,
     platformData,
     activeIndex,
-    setActiveIndex
+    setActiveIndex,
+    EdiModalOpen,
+    editModal,
+    setEditModal,
+    delateISopen,
+    setDelateIsOpen
   };
 
   return (

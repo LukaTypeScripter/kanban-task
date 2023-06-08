@@ -11,11 +11,12 @@ import {
 import Data from '../../data.json';
 import MainContext, { BoardData } from '../../contexts/MainContext';
 import AppContext from '../../contexts/Header';
+import DelateMOdal from '../DelateModal/DelateMOdal';
 
 
 
 const MainPage: React.FC = () => {
-  const { board,modifiedBoard,setModifiedBoard } = useContext(MainContext);
+  const { board,modifiedBoard,setModifiedBoard,EdiModalOpen } = useContext(MainContext);
   
   
   const { isToggled } = useContext(AppContext);
@@ -42,8 +43,8 @@ const MainPage: React.FC = () => {
           </Cols>
         ))}
         
-          <AddNewCol isToggled={isToggled} >+ new column</AddNewCol>
-        
+          <AddNewCol isToggled={isToggled} onClick={EdiModalOpen} >+ new column</AddNewCol>
+         
       </Board>
     </div>
   );
