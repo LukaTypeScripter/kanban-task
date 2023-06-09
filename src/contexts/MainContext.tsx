@@ -42,6 +42,10 @@ interface MainContextValue {
   setEditModal:React.Dispatch<React.SetStateAction<boolean>>,
   delateISopen:boolean,
   setDelateIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  selectedTask:null
+  setSelectedTask:React.Dispatch<React.SetStateAction<null>>
+  isOpenAboutModal:boolean
+  setIsOpenAboutModal:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const initialContextValue: MainContextValue = {
@@ -64,6 +68,10 @@ const initialContextValue: MainContextValue = {
   setEditModal:() => {},
   delateISopen:false,
   setDelateIsOpen:() => {},
+  selectedTask:null,
+  setSelectedTask:() => {},
+  isOpenAboutModal:false,
+  setIsOpenAboutModal:() => {},
 };
 
 const MainContext = createContext<MainContextValue>(initialContextValue);
@@ -81,6 +89,8 @@ export const MainContextProvider = ({ children }: {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [editModal,setEditModal] = useState(false);
   const [delateISopen,setDelateIsOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null); 
+  const [isOpenAboutModal,setIsOpenAboutModal] = useState(false);
   const HandlePlatformChange = (platform: string) => {
     setSelectedPlatform(platform);
   };
@@ -109,7 +119,11 @@ export const MainContextProvider = ({ children }: {
     editModal,
     setEditModal,
     delateISopen,
-    setDelateIsOpen
+    setDelateIsOpen,
+    selectedTask,
+    setSelectedTask,
+    isOpenAboutModal,
+    setIsOpenAboutModal
   };
 
   return (
