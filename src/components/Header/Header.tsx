@@ -15,9 +15,10 @@ import MainContext from '../../contexts/MainContext'
 import Elapsis from '../Elapsis-menu/Elapsis'
 import EditBoard from '../EditBoard/EditBoard'
 import DelateMOdal from '../DelateModal/DelateMOdal'
+import AboutModal from '../AboutModal/AboutModal'
 function Header() {
    const {toggleOpen,isOpen,isToggled,isOpenAddModal,handleTaskModal,isNewTask,isSmallModalOpen,setIsSmallModalOpen} = useContext(AppContext)
-   const {selectedPlatform,editModal,delateISopen} = useContext(MainContext)
+   const {selectedPlatform,editModal,delateISopen,isOpenAboutModal} = useContext(MainContext)
   return (
     <>
    <HeaderCont isToggled={isToggled}>
@@ -49,7 +50,9 @@ function Header() {
    {delateISopen && (
     <DelateMOdal/>
    )}
-
+  {isOpenAboutModal && (
+    <AboutModal/>
+  )}
   
   <MainPage/>
   

@@ -11,18 +11,22 @@ import {
 import Data from '../../data.json';
 import MainContext, { BoardData } from '../../contexts/MainContext';
 import AppContext from '../../contexts/Header';
-import DelateMOdal from '../DelateModal/DelateMOdal';
+
 
 
 
 const MainPage: React.FC = () => {
-  const { board,modifiedBoard,setModifiedBoard,EdiModalOpen } = useContext(MainContext);
-  
+  const { board,modifiedBoard,setModifiedBoard,EdiModalOpen,setSelectedTask,setIsOpenAboutModal,isOpenAboutModal } = useContext(MainContext);
+ 
   
   const { isToggled } = useContext(AppContext);
   if (!board) return null;
 
- 
+ const handleOpenSpecificTask = (task:any) => {
+  setSelectedTask(task);
+  console.log('clicked ' , task)
+  setIsOpenAboutModal(!isOpenAboutModal)
+ }
 
 
   return (
@@ -33,7 +37,7 @@ const MainPage: React.FC = () => {
             <ColName>{column.name}</ColName>
             
             {column.tasks.map((task) => (
-              <Task key={task.title} isToggled={isToggled} draggable>
+              <Task key={task.title} isToggled={isToggled} draggable  onClick={() => handleOpenSpecificTask(task)}>
                 <TaskTitle isToggled={isToggled}>{task.title}</TaskTitle>
                 <NumOfSubTAsks>
                   {task.subtasks.filter((subtask) => !subtask.isCompleted).length} of {task.subtasks.length} subtasks
