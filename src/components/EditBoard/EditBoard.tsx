@@ -6,7 +6,7 @@ import cross from '../../assets/icon-cross.svg'
 
 function EditBoard() {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { isToggled, handleDeleteColumnInput, columnInputs, setColumnInputs,setIsSmallModalOpen } = useContext(AppContext);
+  const { isToggled, handleDeleteColumnInput, columnInputs, setColumnInputs,setIsSmallModalOpen,handleAddColumnInput } = useContext(AppContext);
   const { setBoardName, setEditModal, activeIndex, boardData, boardName, setBoaredData, HandlePlatformChange } = useContext(MainContext);
   const activeBoard = boardData[activeIndex ?? 0];
 
@@ -30,22 +30,41 @@ function EditBoard() {
     const columnNames = activeBoard?.columns.map(column => column.name) ?? [];
     setColumnInputs(columnNames);
   }, [activeBoard]);
-// error adding new columns
-  const handleEditBoard = () => {
-    const updatedBoardData = [...boardData];
-    updatedBoardData[activeIndex].name = boardNameInput;
-    updatedBoardData[activeIndex].columns = columnInputs.map((input, index) => {
-      const column = activeBoard?.columns[index];
-      return {
-        ...column, // Keep all properties of the original column
-        name: input // Update only the name property
-      };
-    });
-    setBoaredData(updatedBoardData);
-    setEditModal(false);
-    HandlePlatformChange(boardNameInput);
-    setIsSmallModalOpen(false)
-  };
+
+const handleEditBoard = () => {
+  const updatedBoardData = [...boardData];
+  updatedBoardData[activeIndex].name = boardNameInput;
+
+
+  const activeBoard = updatedBoardData[activeIndex];
+  const numExistingColumns = activeBoard.columns.length;
+  const numInputs = columnInputs.length;
+
+  if (numInputs > numExistingColumns) {
+    const newColumns = columnInputs
+      .slice(numExistingColumns, numInputs)
+      .map((columnName) => ({
+        name: columnName,
+        tasks: [],
+      }));
+
+    activeBoard.columns.push(...newColumns);
+  }
+
+  // Update existing column names
+  activeBoard.columns = columnInputs.map((input, index) => {
+    const column = activeBoard.columns[index];
+    return {
+      ...column, 
+      name: input,
+    };
+  });
+
+  setBoaredData(updatedBoardData);
+  setEditModal(false);
+  HandlePlatformChange(boardNameInput);
+  setIsSmallModalOpen(false);
+};
 
   return (
     <ModalCOnt>
@@ -75,7 +94,7 @@ function EditBoard() {
             </ModalCol>
           ))}
         </ModalCols>
-        <AddBtn isToggled={isToggled}>+ Add column</AddBtn>
+        <AddBtn isToggled={isToggled} onClick={handleAddColumnInput}>+ Add column</AddBtn>
         <SecondBtn onClick={handleEditBoard}>Save Changes</SecondBtn>
       </Modal>
     </ModalCOnt>

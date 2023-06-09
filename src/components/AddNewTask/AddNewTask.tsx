@@ -21,7 +21,7 @@ import {
 } from "./NewTaskStyles/newTask";
 import cross from "../../assets/icon-cross.svg";
 import MainContext, { Task } from "../../contexts/MainContext";
-import DelateMOdal from "../DelateModal/DelateMOdal";
+
 
 
 function AddNewTask() {
