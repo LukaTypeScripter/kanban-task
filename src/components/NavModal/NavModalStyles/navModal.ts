@@ -9,14 +9,91 @@ export const DropDownContainer = styled.div`
   position: absolute;
   right: 0;
   top: 64px;
+  @media only screen and (min-width: 768px){
+    background-color: #fff;
+    height: 90%;
+    padding: 0;
+    position: static;
+
+
+}
 `;
 
+export const SideBars = styled.div`
+   
+    @media only screen and (min-width: 768px){
+      background-color: #fff;
+    bottom: 0;
+    left: 0;
+    min-width: 261px;
+    padding-top: 38px;
+    position: fixed;
+    top: 72px;
+
+
+}
+`
+export const SideBarClosed = styled(SideBars)`
+  @media only screen and (min-width: 768px){
+    align-items: center;
+    background: #635fc7;
+    border-radius: 0 100px 100px 0;
+    bottom: 32px;
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    min-width: 0;
+    padding: 0;
+    top: auto;
+    transition: .3s;
+    width: 56px;
+
+
+}
+`
+export const Toggle = styled.div`
+border-radius: 0 100px 100px 0;
+    color: #828fa3;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    margin: 8px 24px 32px 0;
+    padding: 15px 30px;
+    transition: .3s;
+`
+export const HideSideBar = styled.p`
+font-size: 15px;
+    font-weight: 700;
+    line-height: 19px;
+`
+export const ToggleSideBar = styled.div`
+    @media only screen and (min-width: 768px){
+      border-radius: 0 100px 100px 0;
+    color: #828fa3;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    margin: 8px 24px 32px 0;
+    padding: 15px 30px;
+    transition: .3s;
+}
+    
+`
 export const DropDownModal = styled.div<{isToggled:boolean}>`
   padding: 16px 0;
   background-color: ${props => props.isToggled ?  White: DarkGray};
   box-shadow: 0px 10px 20px rgba(54, 78, 126, 0.25);
   border-radius: 8px;
   width: 100%;
+  @media only screen and (min-width: 768px){
+    border-radius: 0;
+    box-shadow: none;
+    height: 100%;
+    padding: 0;
+    position: relative;
+
+}
+
 `;
 
 export const Title = styled.h1`
@@ -83,6 +160,16 @@ export const TogglerTheme = styled.div<{isToggled:boolean}>`
   margin: 16px 16px 0;
   padding: 14px;
   border-radius: 6px;
+  @media only screen and (min-width: 768px){
+  
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0;
+    position: absolute;
+    right: 0;
+
+
+}
 `;
 
 export const Switch = styled.label`

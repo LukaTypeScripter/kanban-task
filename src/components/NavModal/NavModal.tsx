@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 
-import { DropDownModal,DropDownContainer,Title,DropDownBoards,DropDownBoard,BoardIcon,AddNewTask,AddBoardIcon,AddBoardText,TogglerTheme,Switch,Inputs,Slider } from './NavModalStyles/navModal'
+import { DropDownModal,DropDownContainer,Title,DropDownBoards,DropDownBoard,BoardIcon,AddNewTask,AddBoardIcon,AddBoardText,TogglerTheme,Switch,Inputs,Slider, SideBars, ToggleSideBar, HideSideBar, SideBarClosed, Toggle } from './NavModalStyles/navModal'
 import NameData from '../../data.json'
 import IconBoard from '../../assets/icon-board.svg'
 import ligthTheme from '../../assets/icon-light-theme.svg'
 import darkTheme from '../../assets/icon-dark-theme.svg'
 import AppContext, { AppContextProvider } from '../../contexts/Header'
 import MainContext from '../../contexts/MainContext'
+import crossedEye from '../../assets/icon-hide-sidebar.svg'
+
 function NavModal() {
     
    const modalRef = useRef<HTMLDivElement>(null)
-    const {toggleTheme,isToggled,toggleAddNewBBOard,setIsOpen,} = useContext(AppContext)
+    const {toggleTheme,isToggled,toggleAddNewBBOard,setIsOpen,isOpen} = useContext(AppContext)
     const {HandlePlatformChange,boardData,setActiveIndex,activeIndex} = useContext(MainContext)
     const handleItemClick = (index: number) => {
       setActiveIndex(index);
@@ -44,7 +46,9 @@ function NavModal() {
   
 
   return (
-    <DropDownContainer  >
+    <>
+    <SideBars>
+    <DropDownContainer>
         <DropDownModal isToggled={isToggled} ref={modalRef}>
             <Title>ALL BOARDS ({boardData.length})</Title>
             <DropDownBoards>
@@ -77,6 +81,18 @@ function NavModal() {
             
         </DropDownModal>
     </DropDownContainer>
+    <ToggleSideBar>
+      <img src={crossedEye} alt="" />
+      <HideSideBar>hiIde Scroll Bar</HideSideBar>
+     
+    </ToggleSideBar>
+   
+     
+  
+  
+    </SideBars>
+ 
+    </>
   )
 }
 
