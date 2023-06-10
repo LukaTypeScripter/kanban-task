@@ -11,13 +11,15 @@ import {
 import Data from '../../data.json';
 import MainContext, { BoardData } from '../../contexts/MainContext';
 import AppContext from '../../contexts/Header';
+import { SideBarClosed, Toggle } from '../NavModal/NavModalStyles/navModal';
+import uncrossedEye from '../../assets/icon-show-sidebar.svg'
 
 
 
 
 const MainPage: React.FC = () => {
-  const { board,modifiedBoard,setModifiedBoard,EdiModalOpen,setSelectedTask,setIsOpenAboutModal,isOpenAboutModal } = useContext(MainContext);
- 
+  const { board,EdiModalOpen,setSelectedTask,setIsOpenAboutModal,isOpenAboutModal,setBoaredData,boardData } = useContext(MainContext);
+ const {isOpen,setIsOpen} = useContext(AppContext)
   
   const { isToggled } = useContext(AppContext);
   if (!board) return null;
@@ -30,8 +32,18 @@ const MainPage: React.FC = () => {
 
 
   return (
-    <div>
-      <Board key={board.name} isToggled={isToggled}>
+    <>
+  
+      <Board key={board.name} isToggled={isToggled} isOpen={isOpen}>
+        {!isOpen && (
+ <SideBarClosed onClick={() => setIsOpen(!isOpen)}>
+ <Toggle>
+ <img src={uncrossedEye} alt="" />
+ </Toggle>
+
+</SideBarClosed>
+        )}
+     
         {board.columns.map((column) => (
           <Cols key={column.name}>
             <ColName>{column.name}</ColName>
@@ -50,7 +62,7 @@ const MainPage: React.FC = () => {
           <AddNewCol isToggled={isToggled} onClick={EdiModalOpen} >+ new column</AddNewCol>
          
       </Board>
-    </div>
+    </>
   );
 };
 
