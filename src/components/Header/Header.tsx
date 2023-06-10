@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { HeaderCont,Imgs,HeaderName,AddBtn,VerticalImg } from './HeaderStyles/headerStyle'
+import { HeaderCont,Imgs,HeaderName,AddBtn,VerticalImg, LogoCont, ProjectName, ImgsPlus,AddNewTasks } from './HeaderStyles/headerStyle'
 import logo from '../../assets/logo-mobile.svg'
 import ArrowDOwn from '../../assets/icon-chevron-down.svg'
 import ArrowUp from '../../assets/icon-chevron-up.svg'
@@ -16,18 +16,24 @@ import Elapsis from '../Elapsis-menu/Elapsis'
 import EditBoard from '../EditBoard/EditBoard'
 import DelateMOdal from '../DelateModal/DelateMOdal'
 import AboutModal from '../AboutModal/AboutModal'
+import TaskDElateElapsis from '../TaskDelateElapsis/TaskDElateElapsis'
+import TaskDelateModal from '../TaskDelateModal/TaskDelateModal'
 function Header() {
    const {toggleOpen,isOpen,isToggled,isOpenAddModal,handleTaskModal,isNewTask,isSmallModalOpen,setIsSmallModalOpen} = useContext(AppContext)
-   const {selectedPlatform,editModal,delateISopen,isOpenAboutModal} = useContext(MainContext)
+   const {selectedPlatform,editModal,delateISopen,isOpenAboutModal,isOpenTaskDel} = useContext(MainContext)
   return (
     <>
    <HeaderCont isToggled={isToggled}>
+    <LogoCont>
     <Imgs src={logo}/>
+    <ProjectName>Kanban</ProjectName>
+    </LogoCont>
+    
     <HeaderName isToggled={isToggled}>
     <h3>{selectedPlatform}</h3>
     <img onClick={toggleOpen} src={isOpen ?ArrowUp : ArrowDOwn} alt="" />
     </HeaderName>
-    <AddBtn><img  src={AddTask} alt="" onClick={handleTaskModal} /></AddBtn>
+    <AddBtn><ImgsPlus  src={AddTask} alt="" onClick={handleTaskModal} />  <AddNewTasks> +Add New Task</AddNewTasks></AddBtn>
     <VerticalImg src={ThreeDots} onClick={() => setIsSmallModalOpen(!isSmallModalOpen)} alt="" />
     {isOpen && (
     <NavModal/>
@@ -53,6 +59,9 @@ function Header() {
   {isOpenAboutModal && (
     <AboutModal/>
   )}
+ {isOpenTaskDel && (
+  <TaskDelateModal/>
+ )}
   
   <MainPage/>
   
