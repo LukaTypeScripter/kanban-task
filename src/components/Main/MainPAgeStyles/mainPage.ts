@@ -2,13 +2,17 @@ import styled from "styled-components";
 
 import { DefaultStyles } from "../../../RootStyles";
 const { LigthGray, MediumGray,VeryDarkGray,DarkGray,MainPurple } = DefaultStyles.colors;
-export const Board = styled.div<{isToggled:boolean}>`
+export const Board = styled.div<{isToggled:boolean,isOpen:boolean}>`
   display: flex;
   overflow-x: scroll;
   gap: 24px;
   padding: 88px 16px 24px;
   background-color: ${props => props.isToggled ?   LigthGray : VeryDarkGray };
   min-height: 100vh;
+  @media only screen and (min-width: 768px){
+    padding: 104px 24px 24px;
+    margin-left: ${props => props.isOpen ? "261px": ''};
+}
 `;
 
 export const Cols = styled.div`
