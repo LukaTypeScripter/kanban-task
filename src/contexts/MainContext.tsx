@@ -46,6 +46,10 @@ interface MainContextValue {
   setSelectedTask:React.Dispatch<React.SetStateAction<null>>
   isOpenAboutModal:boolean
   setIsOpenAboutModal:React.Dispatch<React.SetStateAction<boolean>>
+  isOpenDelElapsis:boolean
+  isOpenTaskDel:boolean
+  setIsOpenDelElapsis:React.Dispatch<React.SetStateAction<boolean>>
+  setIsOpenTaskDel:React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const initialContextValue: MainContextValue = {
@@ -72,6 +76,11 @@ const initialContextValue: MainContextValue = {
   setSelectedTask:() => {},
   isOpenAboutModal:false,
   setIsOpenAboutModal:() => {},
+  isOpenDelElapsis:false,
+  isOpenTaskDel:false,
+  setIsOpenDelElapsis:() => {},
+  setIsOpenTaskDel:() => {},
+
 };
 
 const MainContext = createContext<MainContextValue>(initialContextValue);
@@ -91,6 +100,10 @@ export const MainContextProvider = ({ children }: {
   const [delateISopen,setDelateIsOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null); 
   const [isOpenAboutModal,setIsOpenAboutModal] = useState(false);
+//elapsis
+  const [isOpenDelElapsis,setIsOpenDelElapsis] = useState(false);
+  //delate
+  const [isOpenTaskDel,setIsOpenTaskDel] = useState(false);
   const HandlePlatformChange = (platform: string) => {
     setSelectedPlatform(platform);
   };
@@ -123,7 +136,11 @@ export const MainContextProvider = ({ children }: {
     selectedTask,
     setSelectedTask,
     isOpenAboutModal,
-    setIsOpenAboutModal
+    setIsOpenAboutModal,
+    isOpenDelElapsis,
+    setIsOpenDelElapsis,
+    isOpenTaskDel,
+    setIsOpenTaskDel
   };
 
   return (
