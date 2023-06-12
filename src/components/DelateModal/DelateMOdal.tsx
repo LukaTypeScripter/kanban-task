@@ -6,7 +6,7 @@ import AppContext from "../../contexts/Header";
 
 function DelateMOdal() {
   const { activeIndex, boardData,setBoaredData,setActiveIndex,HandlePlatformChange,setDelateIsOpen, } = useContext(MainContext);
-  const { setIsSmallModalOpen} = useContext(AppContext)
+  const { setIsSmallModalOpen,isToggled} = useContext(AppContext)
   const handleDeleteBoard = () => {
     if (activeIndex !== null) {
       const updatedBoardData = [...boardData];
@@ -30,14 +30,14 @@ function DelateMOdal() {
   const activeBoard = boardData[activeIndex ?? 0];
   return (
     <ModalCOnt>
-    <DelateModal>
+    <DelateModal isToggled={isToggled}>
       <DelateHeader>Delete this board ?</DelateHeader>
       <Premisinon>
       Are you sure you want to delete the "{activeBoard.name}" board? This action will remove all columns and tasks and cannot be reversed.
       </Premisinon>
       <DelateModalBtn>
         <DelateBtn onClick={handleDeleteBoard}>Delate</DelateBtn>
-        <CancelBtn onClick={() => setDelateIsOpen(false)}>Cancel</CancelBtn>
+        <CancelBtn onClick={() => setDelateIsOpen(false)} isToggled={isToggled}>Cancel</CancelBtn>
       </DelateModalBtn>
     </DelateModal>
     </ModalCOnt>
