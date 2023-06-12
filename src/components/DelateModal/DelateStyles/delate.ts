@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import { DefaultStyles } from "../../../RootStyles";
-
-export const DelateModal = styled.div`
-  background-color: #fff;
+const {DarkGray} = DefaultStyles.colors
+export const DelateModal = styled.div<{isToggled:boolean}>`
+  background-color: ${props => props.isToggled ? "#fff" : DarkGray};
   border-radius: 6px;
   max-height: 90%;
   padding: 24px;
   width: 343px;
+  @media only screen and (min-width: 768px){
+
+    padding: 32px;
+    width: 480px;
+  }
+
+
 `;
 
 export const DelateHeader = styled.h3`
@@ -25,10 +32,16 @@ export const Premisinon = styled.p`
 `;
 
 export const DelateModalBtn = styled.div`
+ @media only screen and (min-width: 768px){
+  display: flex;
+    gap: 16px;
+ }
+   
+
 
 `
-export const CancelBtn = styled.button`
-   background-color: rgba(99,95,199,.1);
+export const CancelBtn = styled.button<{isToggled:boolean}>`
+   background-color: ${props => props.isToggled ? "rgba(99,95,199,.1)" :"#fff"};
     color: ${DefaultStyles.colors.MainPurple};
     margin-bottom: 16px;
     border-radius: 20px;
@@ -54,4 +67,7 @@ margin-bottom: 16px;
     width: 100%;
     outline: none;
     border: none;
+    &:hover{
+      background: #FF9898;
+    }
 `

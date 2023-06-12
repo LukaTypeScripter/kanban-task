@@ -12,7 +12,7 @@ background-color: ${props => props.isToggled ? "#fff" : VeryDarkGray};
     top: 150%;
     width: 40%;
     right: 2%;
-    top: 7%;
+    top: 100%;
     width: 150px;
     font-size: 13px;
     font-weight: 500;

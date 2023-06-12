@@ -12,6 +12,7 @@ export const Board = styled.div<{isToggled:boolean,isOpen:boolean}>`
   @media only screen and (min-width: 768px){
     padding: 104px 24px 24px;
     margin-left: ${props => props.isOpen ? "261px": ''};
+    overflow: hidden;
 }
 `;
 
@@ -42,6 +43,9 @@ export const TaskTitle = styled.p<{isToggled:boolean}>`
     font-weight: 700;
     line-height: 19px;
     color: ${props => props.isToggled ? "" : '#fff'};
+    &:hover{
+      color:  ${MainPurple};
+    }
 `
 export const NumOfSubTAsks = styled.p`
    color: ${MediumGray};

@@ -20,8 +20,14 @@ background-color: ${props => props.isToggled ?  White : DarkGray };
 border-radius: 6px;
 max-height: 90%;
 overflow-y: scroll;
+
 padding: 24px;
 width: 343px;
+@media only screen and (min-width: 768px){
+    padding: 32px;
+    width: 480px;
+}
+   
 `
 
 
@@ -78,7 +84,7 @@ export const InputCont = styled.div`
 export const AddBtn = styled.button<{isToggled:boolean}>`
     align-items: center;
     display: flex;
-    font-size: 13px;
+    font-size: 16px;
     height: 40px;
     justify-content: center;
     width: 100%;
@@ -108,5 +114,8 @@ export const SecondBtn = styled.button`
     padding: 15px 18px;
     outline: none;
     border: none;
+    &:hover{
+        background: #A8A4FF;
+    }
 
 `

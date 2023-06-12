@@ -28,14 +28,16 @@ margin-top: 24px;
 `
 
 export const Options = styled.select<{isToggled:boolean}>`
-appearance: none;
+
+-webkit-appearance: none;
+    appearance: none;
 width: 100%;
 background-image: url(${arrowDown});
 background-position: right 16px top 50%;
 background-repeat: no-repeat;
 border: 1px solid #828fa340;
     border-radius: 4px;
-    padding: 8px 16px;
+    padding: 10px 20px;
 background-color: ${props => props.isToggled ? "" : DarkGray};
 color: ${props => props.isToggled ? "" : White};
 `
