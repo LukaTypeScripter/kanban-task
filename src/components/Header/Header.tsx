@@ -26,18 +26,16 @@ function Header() {
    <HeaderCont isToggled={isToggled}>
     <LogoCont>
     <Imgs src={logo}/>
-    <ProjectName>Kanban</ProjectName>
+    <ProjectName isToggled={isToggled}>Kanban</ProjectName>
     </LogoCont>
     
     <HeaderName isToggled={isToggled}>
     <h3>{selectedPlatform}</h3>
     <img onClick={toggleOpen} src={isOpen ?ArrowUp : ArrowDOwn} alt="" />
     </HeaderName>
-    <AddBtn><ImgsPlus  src={AddTask} alt="" onClick={handleTaskModal} />  <AddNewTasks> +Add New Task</AddNewTasks></AddBtn>
+    <AddBtn><ImgsPlus  src={AddTask} alt="" onClick={handleTaskModal} />  <AddNewTasks onClick={handleTaskModal}> +Add New Task</AddNewTasks></AddBtn>
     <VerticalImg src={ThreeDots} onClick={() => setIsSmallModalOpen(!isSmallModalOpen)} alt="" />
-    {isOpen && (
-    <NavModal/>
-   )}
+   
    {isOpenAddModal && (
     <AddNewBoard/>
    )}
@@ -62,9 +60,9 @@ function Header() {
  {isOpenTaskDel && (
   <TaskDelateModal/>
  )}
-  
+   
   <MainPage/>
-  
+
    </>
   )
 }
