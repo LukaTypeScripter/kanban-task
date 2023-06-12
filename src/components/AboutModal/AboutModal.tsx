@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import  { useContext, useEffect, useRef } from 'react';
 import { ModalCOnt } from '../AddNewBoard/NewBoardStyles/newBoardStyles';
 import { DelateModal } from '../DelateModal/DelateStyles/delate';
 import { Desc, SelectCont, Status, SubTasksCheckBox, SubTasksCompleted, Subtasks, TaskModalCOnt, Title, Todo } from './aboutStyles/aboutModal';
@@ -9,7 +9,7 @@ import AppContext from '../../contexts/Header';
 import TaskDElateElapsis from '../TaskDelateElapsis/TaskDElateElapsis';
 
 function AboutModal() {
-  const { selectedTask, setIsOpenAboutModal, boardData, activeIndex,setBoaredData,setIsOpenDelElapsis,isOpenTaskDel,isOpenDelElapsis } = useContext(MainContext);
+  const { selectedTask, setIsOpenAboutModal, boardData, activeIndex,setBoaredData,setIsOpenDelElapsis,isOpenDelElapsis } = useContext(MainContext);
   const { isToggled } = useContext(AppContext);
 
   if (!selectedTask) return null;

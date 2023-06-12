@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import  { useContext, useState } from "react";
 import {
   Modal,
   NewBoardHeader,

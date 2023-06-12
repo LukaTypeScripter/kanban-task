@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { DelateHeader, DelateModal, Premisinon,DelateModalBtn,DelateBtn,CancelBtn } from "./DelateStyles/delate";
 import MainContext from "../../contexts/MainContext";
 import { ModalCOnt } from "../AddNewBoard/NewBoardStyles/newBoardStyles";

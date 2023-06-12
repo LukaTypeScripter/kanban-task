@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import  { useContext, useEffect, useRef, useState } from 'react'
 import { Modal, ModalCOnt, NewBoardHeader, Lables, BoardNameInp, AddBtn, ModalCols, ModalCol, InputCont, SecondBtn } from '../AddNewBoard/NewBoardStyles/newBoardStyles'
 import AppContext from '../../contexts/Header';
 import MainContext from '../../contexts/MainContext';
@@ -7,7 +7,7 @@ import cross from '../../assets/icon-cross.svg'
 function EditBoard() {
   const modalRef = useRef<HTMLDivElement>(null);
   const { isToggled, handleDeleteColumnInput, columnInputs, setColumnInputs,setIsSmallModalOpen,handleAddColumnInput } = useContext(AppContext);
-  const { setBoardName, setEditModal, activeIndex, boardData, boardName, setBoaredData, HandlePlatformChange } = useContext(MainContext);
+  const { setEditModal, activeIndex, boardData, setBoaredData, HandlePlatformChange } = useContext(MainContext);
   const activeBoard = boardData[activeIndex ?? 0];
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DefaultStyles } from "../../../RootStyles";
-const { Black,White,VeryDarkGray} = DefaultStyles.colors
+const { White,VeryDarkGray} = DefaultStyles.colors
 
 export const TaskModalCOnt = styled.div`
 align-items: center;

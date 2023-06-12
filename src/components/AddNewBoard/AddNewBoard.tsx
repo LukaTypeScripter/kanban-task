@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import  { useContext, useEffect, useRef } from 'react'
 import { Modal, ModalCOnt,NewBoardHeader,Lables,BoardNameInp,AddBtn,ModalCols,ModalCol, InputCont, SecondBtn } from './NewBoardStyles/newBoardStyles'
 import AppContext from '../../contexts/Header';
 import cross from '../../assets/icon-cross.svg'
-import AddNewTask from '../AddNewTask/AddNewTask';
+
 import MainContext from '../../contexts/MainContext';
 
 function AddNewBoard() {
