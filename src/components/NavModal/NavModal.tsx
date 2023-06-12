@@ -47,7 +47,7 @@ function NavModal() {
 
   return (
     <>
-    <SideBars>
+    <SideBars isToggled={isToggled}>
     <DropDownContainer>
         <DropDownModal isToggled={isToggled} ref={modalRef}>
             <Title>ALL BOARDS ({boardData.length})</Title>
@@ -81,6 +81,7 @@ function NavModal() {
             
         </DropDownModal>
     </DropDownContainer>
+   
     <ToggleSideBar>
       <img src={crossedEye} alt="" />
       <HideSideBar>hiIde Scroll Bar</HideSideBar>
