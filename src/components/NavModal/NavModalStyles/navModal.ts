@@ -10,7 +10,7 @@ export const DropDownContainer = styled.div`
   right: 0;
   top: 64px;
   @media only screen and (min-width: 768px){
-    background-color: #fff;
+    background-color: red;
     height: 90%;
     padding: 0;
     position: static;
@@ -19,16 +19,16 @@ export const DropDownContainer = styled.div`
 }
 `;
 
-export const SideBars = styled.div`
+export const SideBars = styled.div<{isToggled:boolean}>`
    
     @media only screen and (min-width: 768px){
-      background-color: #fff;
+      background-color: ${props => props.isToggled ? White:DarkGray};
     bottom: 0;
     left: 0;
     min-width: 261px;
     padding-top: 38px;
     position: fixed;
-    top: 72px;
+    top: 75px;
 
 
 }
@@ -52,19 +52,35 @@ export const SideBarClosed = styled(SideBars)`
 }
 `
 export const Toggle = styled.div`
-border-radius: 0 100px 100px 0;
+@media only screen and (min-width: 768px){
+  border-radius: 0 100px 100px 0;
     color: #828fa3;
     cursor: pointer;
     display: flex;
     gap: 10px;
-    margin: 8px 24px 32px 0;
-    padding: 15px 30px;
+   margin: 0;
+   padding: 18px 20px;
     transition: .3s;
+    background: transparent;
+    &:hover{
+      background-color:#A8A4FF;
+      color: #635fc7;
+    }
+    
+}
+@media only screen and (max-width: 768px) {
+display: none;
+}
+
 `
 export const HideSideBar = styled.p`
 font-size: 15px;
     font-weight: 700;
     line-height: 19px;
+     @media only screen and (max-width: 768px){
+      display: none;
+     }
+   
 `
 export const ToggleSideBar = styled.div`
     @media only screen and (min-width: 768px){
@@ -76,7 +92,16 @@ export const ToggleSideBar = styled.div`
     margin: 8px 24px 32px 0;
     padding: 15px 30px;
     transition: .3s;
+    &:hover{
+      background-color:${White};
+    }
 }
+ @media only screen and (max-width: 768px){
+img {
+display: none;
+}
+ }
+
     
 `
 export const DropDownModal = styled.div<{isToggled:boolean}>`
@@ -118,6 +143,11 @@ export const DropDownBoard = styled.div<{ active: boolean }>`
   color: ${(props) => (props.active ? "white" : MediumGray)};
   background: ${(props) => (props.active ? "#635FC7" : "")};
   border-radius: ${(props) => (props.active ? "0px 100px 100px 0px" : "")};
+  &:hover{
+      background-color:${White};
+      color: ${(props) => (props.active ? "black" : MediumGray)};
+      border-radius: 0 100px 100px 0;
+    }
 `;
 
 export const BoardIcon = styled.img`
@@ -132,6 +162,11 @@ export const AddNewTask = styled.div`
 
   padding: 15px 24px;
   transition: 0.3s;
+  &:hover{
+      background-color:${White};
+     
+      border-radius: 0 100px 100px 0;
+    }
 `;
 
 export const AddBoardIcon = styled.img`
