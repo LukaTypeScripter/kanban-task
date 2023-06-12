@@ -97,20 +97,20 @@ function AboutModal() {
   };
   return (
     <ModalCOnt>
-      <DelateModal ref={modalRef}>
+      <DelateModal isToggled={isToggled} ref={modalRef}>
         <TaskModalCOnt>
-          <Title>{(selectedTask as any).title}</Title>
+          <Title isToggled={isToggled}>{(selectedTask as any).title}</Title>
           <img src={verticalDots} alt="" onClick={() => setIsOpenDelElapsis(!isOpenDelElapsis)}/>
           {isOpenDelElapsis && (
     <TaskDElateElapsis/>
   )
   }
         </TaskModalCOnt>
-        <Desc>{(selectedTask as any).description}</Desc>
-        <SubTasksCompleted>{(selectedTask as any).subtasksCompleted}</SubTasksCompleted>
+        <Desc isToggled={isToggled}>{(selectedTask as any).description}</Desc>
+        <SubTasksCompleted isToggled={isToggled}>{(selectedTask as any).subtasksCompleted}</SubTasksCompleted>
 
         {(selectedTask as any).subtasks.map((subtask: any,index:any) => (
-          <Subtasks key={index}>
+          <Subtasks key={index} isToggled={isToggled}>
             <SubTasksCheckBox
               checked={!subtask.isCompleted}
               type='checkbox'
@@ -118,12 +118,12 @@ function AboutModal() {
             >
               {subtask.name}
             </SubTasksCheckBox>
-            <Todo>{subtask.title}</Todo>
+            <Todo isToggled={isToggled}>{subtask.title}</Todo>
           </Subtasks>
         ))}
 
         <SelectCont>
-          <Status>Current Status</Status>
+          <Status isToggled={isToggled}>Current Status</Status>
           <Options isToggled={isToggled} onChange={(e) => moveTaskToColumn(Number(e.target.value))}>
             {renderOptions()}
           </Options>
