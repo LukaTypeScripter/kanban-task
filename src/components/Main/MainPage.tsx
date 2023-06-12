@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Board,
   Cols,
   ColName,
   Task,
   TaskTitle,
-  NumOfSubTAsks,
+  NumOfSubTAsks,  
   AddNewCol,
 } from './MainPAgeStyles/mainPage';
-import Data from '../../data.json';
-import MainContext, { BoardData } from '../../contexts/MainContext';
+
+import MainContext from '../../contexts/MainContext';
 import AppContext from '../../contexts/Header';
 import { SideBarClosed, Toggle } from '../NavModal/NavModalStyles/navModal';
 import uncrossedEye from '../../assets/icon-show-sidebar.svg'
@@ -28,10 +28,17 @@ const MainPage: React.FC = () => {
     console.log('clicked ', task);
     setIsOpenAboutModal(!isOpenAboutModal);
   };
+  const [isReadyForDragDrop, setIsReadyForDragDrop] = useState(false);
 
+  useEffect(() => {
+    if (board) {
+      setIsReadyForDragDrop(true);
+    }
+  }, [board]);
   const handleDragEnd = (result: any) => {
     const { destination, source } = result;
-  
+  console.log(destination)
+  console.log(source)
     // შევამოწმოთ თუ კონტეინერი გარეთ არის
     if (!destination) {
       return;
@@ -48,12 +55,12 @@ const MainPage: React.FC = () => {
     // ვიპოვოთ source და destinationColumn ი
     const sourceColumn = board.columns.find(
       (column) => column.name === source.droppableId
-    ) || { tasks: [] }; // Provide a default value if sourceColumn is not found
-  
+    ) || { tasks: [] }; 
+      console.log(source)
     const destinationColumn = board.columns.find(
       (column) => column.name === destination.droppableId
     );
-  
+  console.log(destinationColumn)
     // წავშალოთ სხვა კოლუმში წასულის პირვანდელი ადგილი
     const [task] = sourceColumn.tasks.splice(source.index, 1);
   
@@ -64,8 +71,8 @@ const MainPage: React.FC = () => {
       sourceColumn.tasks.splice(destination.index, 0, task);
     }
   
-    // Update the board data
-    setBoaredData([...boardData]); // Use the spread operator to create a new array
+    
+    setBoaredData([...boardData]); 
   };
 
   return (
@@ -82,26 +89,32 @@ const MainPage: React.FC = () => {
               </Toggle>
             </SideBarClosed>
           )}
-
-{board.columns.map((column) => (
-  <Cols key={column.name}>
-    <ColName>{column.name}</ColName>
-    <Droppable droppableId={column.name}>
-      {(provided) => (
-        <div ref={provided.innerRef} {...provided.droppableProps}>
-          {column.tasks.map((task, index) => {
-            // Generate a unique draggableId for each task
-            const draggableId = `${column.name}-${task.title}`;
-
-            return (
+{isReadyForDragDrop && (
+  <>
+  {board.columns.map((column) => (
+    <Cols key={column.name} >
+      <ColName>{column.name}</ColName>
+      <Droppable droppableId={column.name}>
+        {(provided) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {column.tasks.map((task, index) => {
+             
+             const draggableId = `${column.name}-${task.title}`;
+             
+             return (
               <Draggable key={draggableId} draggableId={draggableId} index={index}>
-                {(provided) => (
+                {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <Task key={task.title} isToggled={isToggled} draggable onClick={() => handleOpenSpecificTask(task)}>
+                    <Task
+                      key={draggableId} 
+                      isToggled={isToggled}
+                      draggable={snapshot.isDragging}
+                      onClick={() => handleOpenSpecificTask(task)}
+                    >
                       <TaskTitle isToggled={isToggled}>{task.title}</TaskTitle>
                       <NumOfSubTAsks>
                         {task.subtasks.filter((subtask) => !subtask.isCompleted).length} of {task.subtasks.length} subtasks
@@ -111,13 +124,16 @@ const MainPage: React.FC = () => {
                 )}
               </Draggable>
             );
-          })}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
-  </Cols>
-))}
+            })}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </Cols>
+  ))}
+  </>
+)}
+
 
           <AddNewCol isToggled={isToggled} onClick={EdiModalOpen}>+ new column</AddNewCol>
 
